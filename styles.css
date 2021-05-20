@@ -36,7 +36,15 @@ body {
     border-radius: 3px;
     color: white;
 }
-
+/* list item */
+#robots li {
+    cursor: pointer;
+    padding: .4em .6em;
+    margin: 1rem;
+    background-color: #e944ff;
+    border-radius: 3px;
+    color: white;
+}
 
 .btn {
     padding: .4em .6em;
@@ -67,4 +75,8 @@ body {
 .btn:hover {
     transform: translateY(-5px);
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.active-robot {
+    background-color: green !important;
 }

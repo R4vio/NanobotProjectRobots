@@ -36,4 +36,41 @@ function IndexArrinArr(haystack, needle){
     }
     return -1;
 }
-export {ArrinArr, getObstacleMaps, getMouseCoords, popValue}
+//dir: {dx, dy}
+function move(currentpos, rows, cols, allPositions, allRobots, dir){
+    let {dx, dy} = dir;
+    let nextpos = [currentpos[0]+dx, currentpos[1]+dy]
+    if(checkmove(nextpos, rows, cols, allPositions, allRobots)){
+        allRobots[IndexArrinArr(allRobots, currentpos)] = nextpos
+    }
+    return allRobots
+}
+function checkmove(nextpos, rows, cols, allPositions, allRobots){
+    if(checkBounds(nextpos, rows, cols) && !ArrinArr(allRobots, nextpos) && !ArrinArr(allPositions, nextpos)){
+        return true
+    }
+    return false
+}
+function checkBounds(pos, rows, cols){
+    let [x, y] = pos;
+    if (x < rows && x > 0 && y > 0 && y < cols) {
+        return true;
+    }
+    return false;
+}
+
+// check for duplicate map names
+function duplicate(mapInput){
+    let maps = getObstacleMaps() || [];
+    let i = 0;
+    while (i< maps.length){
+        let map = maps[i];
+        if (Object.keys(map)[0] === mapInput){
+            return true;
+        }
+        i++;
+    }
+    return false;
+}
+
+export {ArrinArr, getObstacleMaps, getMouseCoords, popValue, duplicate, move}
