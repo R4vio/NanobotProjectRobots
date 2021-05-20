@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./styles.css" />
+		<script type="module" src="./main.js" defer></script>
+		<title>Pathfinding</title>
+	</head>
+	<body>
+		<div class="canvas-container"></div>
+		<div class="legend">
+			<div class="btn-container">
+				<form id="save-form">
+					<input autocomplete="off" required type="text" id="map-name" placeholder="Map name" />
+					<button type="submit" id="save-btn" class="btn save">Save</button>
+				</form>
+				<button id="upload-btn" class="btn upload">Upload</button>
+				<button id="clear-btn" class="btn clear">Clear</button>
+
+			</div>
+			<ul id="saved-items"></ul>
+			<h2>Robots</h2>
+			<ul id="robots"></ul>
+		</div>
+	</body>
+</html>
