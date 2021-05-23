@@ -39,11 +39,12 @@ function IndexArrinArr(haystack, needle){
 //dir: {dx, dy}
 function move(currentpos, rows, cols, allPositions, allRobots, dir){
     let {dx, dy} = dir;
-    let nextpos = [currentpos[0]+dx, currentpos[1]+dy]
+    let nextpos = [currentpos[0]+dx, currentpos[1]+dy];
     if(checkmove(nextpos, rows, cols, allPositions, allRobots)){
-        allRobots[IndexArrinArr(allRobots, currentpos)] = nextpos
+        allRobots[IndexArrinArr(allRobots, currentpos)] = nextpos;
+        currentpos = nextpos;
     }
-    return allRobots
+    return {allRobots, currentpos};
 }
 function checkmove(nextpos, rows, cols, allPositions, allRobots){
     if(checkBounds(nextpos, rows, cols) && !ArrinArr(allRobots, nextpos) && !ArrinArr(allPositions, nextpos)){

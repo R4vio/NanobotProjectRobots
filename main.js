@@ -1,5 +1,6 @@
 import Cell from "./Cell.js";
 import { ArrinArr, getObstacleMaps, getMouseCoords, popValue, duplicate, move} from "./globalFunctions.js";
+import checkKey from './controls.js';
 
 const canvas = document.createElement("canvas");
 const canvasContainer = document.querySelector(".canvas-container");
@@ -108,7 +109,7 @@ const robotList = document.getElementById("robots");
 robotList.addEventListener("click", (e) => {
 	if (e.target.nodeName != "UL") {
 		let coords = e.target.textContent.split(",");
-		currentbot = coords;
+		currentbot = coords.map(char => Number(char));
 		Array.from(robotList.children).forEach((li) => {
 			li.classList.remove("active-robot");
 		});
@@ -168,20 +169,27 @@ function updateRobotList() {
 	});
 }
 
-window.addEventListener("keypress", (e) => {
-	switch (e.key) {
-		case "w":
-            allRobots = move(currentbot, rows, columns, allPositions, allRobots, {dx: 0 , dy: -1} )
-			break;
-		case "a":
-			break;
-		case "s":
-			break;
-		case "d":
-			break;
-		default:
-            break;
-	}
+window.addEventListener("keydown", (e) => {
+	let {allRobots: robots, newCurrentPos} = checkKey(e, currentbot, rows, columns, allPositions, allRobots);
+	allRobots = robots;
+	currentbot = newCurrentPos;
 });
+
+// window.addEventListener("keypress", (e) => {
+// 	switch (e.key) {
+// 		case "w":
+//             allRobots = move(currentbot, rows, columns, allPositions, allRobots, {dx: 0 , dy: -1} )
+// 			break;
+// 		case "a":
+// 			break;
+// 		case "s":
+// 			break;
+// 		case "d":
+// 			break;
+// 		default:
+//             break;
+// 	}
+// 	checkKey(e)
+// });
 
 document.querySelector(".canvas-container").appendChild(canvas);
