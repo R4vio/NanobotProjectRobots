@@ -1,0 +1,23 @@
+{
+  "name": "nano-bots",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "dev": "parcel index.html --port 5000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/R4vio/NanobotProjectRobots.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/R4vio/NanobotProjectRobots/issues"
+  },
+  "homepage": "https://github.com/R4vio/NanobotProjectRobots#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
+}
