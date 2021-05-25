@@ -5,6 +5,9 @@
 }
 
 body {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
     overflow: hidden;
     display: flex;
     /* flex-direction: column; */
@@ -13,8 +16,8 @@ body {
 
 .canvas-container {
     /* margin: 1em; */
-    height:95vmin;
-    width: 95vmin;
+    height: 100%;
+    width: 100%;
     
 }
 .legend {

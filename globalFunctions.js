@@ -54,7 +54,7 @@ function checkmove(nextpos, rows, cols, allPositions, allRobots){
 }
 function checkBounds(pos, rows, cols){
     let [x, y] = pos;
-    if (x < rows && x > 0 && y > 0 && y < cols) {
+    if (x < cols && x >= 0 && y >= 0 && y < rows) {
         return true;
     }
     return false;
@@ -73,5 +73,4 @@ function duplicate(mapInput){
     }
     return false;
 }
-
-export {ArrinArr, getObstacleMaps, getMouseCoords, popValue, duplicate, move}
+export {ArrinArr, getObstacleMaps, getMouseCoords, popValue, duplicate, move, IndexArrinArr}
