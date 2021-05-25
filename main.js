@@ -9,8 +9,8 @@ const c = canvas.getContext("2d");
 c.strokeStyle = "#000";
 c.fillStyle = "#ccc";
 
-const rows = 10;
-const columns = 10;
+const rows = 100;
+const columns = 140;
 let cellSize = 1;
 canvasContainer.clientHeight / rows < canvasContainer.clientWidth / columns
 	? (cellSize = canvasContainer.clientHeight / rows)
@@ -18,14 +18,18 @@ canvasContainer.clientHeight / rows < canvasContainer.clientWidth / columns
 c.font = `${cellSize / 3}px sans-serif`;
 
 // setup board
+let grid;
+var finder = new PF.AStarFinder();
 let currentbot;
 let interval;
 let cells = [];
 let allPositions = [];
 let allRobots = [];
-
+let paths = [];
 function setup() {
+	grid = new PF.Grid(rows, columns)
 	cells = [];
+	paths = [];
 	allPositions = [];
 	allRobots = [];
 	currentbot = [];
@@ -39,14 +43,30 @@ function setup() {
 }
 
 setup();
-
+let goal = [2,2]
 function animate() {
+	pathfollow();
 	c.clearRect(0, 0, canvas.width, canvas.height);
 	cells.forEach((cell, i) => {
 		cell.draw();
 	});
+	
 }
-
+function pathfollow(){
+	for (let i = 0; i < allRobots.length; i++) {
+		let robot = allRobots[i];
+		let x = robot[0]
+		let y = robot[1]
+		let path = finder.findPath(x, y, goal[0], goal[1], grid.clone())
+		let pathmove;
+		path.length > 1 ? pathmove = path[1] : pathmove = path[0]
+		cells[x*rows + y].changeType('empty')
+		allRobots = move(robot, rows, columns, allPositions, allRobots, {dx: pathmove[0]-x , dy: pathmove[1]-y} )
+		robot = allRobots[i]
+		cells[robot[0]*rows + robot[1]].changeType('robot')
+		updateRobotList();
+	}
+}
 const saveForm = document.getElementById("save-form");
 const mapName = document.getElementById("map-name");
 
@@ -127,6 +147,7 @@ function loadMap(map) {
 		//console.log(x, y)
 		// console.log(cells[x*rows + y])
 		cells[x * rows + y].changeType("obstacle");
+		grid.setWalkableAt(x, y, false)
 		allPositions.push([x, y]);
 	}
 }
@@ -143,6 +164,7 @@ window.addEventListener("click", (e) => {
 		let [x, y] = [xy[0], xy[1]];
 		if (!ArrinArr(allPositions, xy)) {
 			cells[x * rows + y].changeType("obstacle");
+			grid.setWalkableAt(x, y, false)
 			allRobots = popValue(allRobots, [x, y]);
 			allPositions.push(xy);
 			updateRobotList();
@@ -156,6 +178,7 @@ window.oncontextmenu = (e) => {
 	let [x, y] = getMouseCoords(e, cellSize, columns, rows);
 	if (!ArrinArr(allRobots, [x, y])) {
 		cells[x * rows + y].changeType("robot");
+		grid.setWalkableAt(x, y, true)
 		allPositions = popValue(allPositions, [x, y]);
 		allRobots.push([x, y]);
 	}

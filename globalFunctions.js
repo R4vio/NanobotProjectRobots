@@ -72,5 +72,4 @@ function duplicate(mapInput){
     }
     return false;
 }
-
 export {ArrinArr, getObstacleMaps, getMouseCoords, popValue, duplicate, move, IndexArrinArr}
