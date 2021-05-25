@@ -37,7 +37,7 @@ function setup() {
 	interval = setInterval(animate, 100);
 }
 
-setup();
+// setup();
 
 function animate() {
 	c.clearRect(0, 0, canvas.width, canvas.height);
@@ -170,9 +170,11 @@ function updateRobotList() {
 }
 
 window.addEventListener("keydown", (e) => {
-	let {allRobots: robots, newCurrentPos} = checkKey(e, currentbot, rows, columns, allPositions, allRobots);
+	let {allRobots: robots, currentpos: newCurrentPos} = checkKey(e, currentbot, rows, columns, allPositions, allRobots);
+	console.log(robots)
 	allRobots = robots;
 	currentbot = newCurrentPos;
+	updateRobotList()
 });
 
 // window.addEventListener("keypress", (e) => {
