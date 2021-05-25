@@ -1,5 +1,5 @@
 import Cell from "./Cell.js";
-import { ArrinArr, getObstacleMaps, getMouseCoords, popValue, duplicate, move} from "./globalFunctions.js";
+import { ArrinArr, getObstacleMaps, getMouseCoords, popValue, duplicate, move, IndexArrinArr} from "./globalFunctions.js";
 
 const canvas = document.createElement("canvas");
 const canvasContainer = document.querySelector(".canvas-container");
@@ -12,12 +12,13 @@ c.fillStyle = "#ccc";
 const rows = 10;
 const columns = 10;
 let cellSize = 1;
-canvasContainer.clientHeight < canvasContainer.clientWidth
+canvasContainer.clientHeight / rows < canvasContainer.clientWidth / columns
 	? (cellSize = canvasContainer.clientHeight / rows)
-	: (cellSize = canvasContainer.clientWidth / rows);
+	: (cellSize = canvasContainer.clientWidth / columns);
 c.font = `${cellSize / 3}px sans-serif`;
 
 // setup board
+let currentbot;
 let interval;
 let cells = [];
 let allPositions = [];
@@ -27,6 +28,7 @@ function setup() {
 	cells = [];
 	allPositions = [];
 	allRobots = [];
+	currentbot = [];
 	clearInterval(interval);
 	for (let x = 0; x < columns; x++) {
 		for (let y = 0; y < rows; y++) {
@@ -103,17 +105,18 @@ function makeListItems() {
 	}
 	// mapNames.flat()
 }
-let currentbot;
+
 const robotList = document.getElementById("robots");
 robotList.addEventListener("click", (e) => {
 	if (e.target.nodeName != "UL") {
-		let coords = e.target.textContent.split(",");
+		let coords = e.target.textContent.split(",").map(x=>+x);
 		currentbot = coords;
 		Array.from(robotList.children).forEach((li) => {
 			li.classList.remove("active-robot");
 		});
 		e.target.classList.add("active-robot");
 	}
+	console.log(currentbot)
 	// let robotPositionValue = e.target
 	// currentbot = allRobots[i]// where i is index of bot
 });
@@ -157,6 +160,7 @@ window.oncontextmenu = (e) => {
 		allRobots.push([x, y]);
 	}
 	updateRobotList();
+	console.log(allRobots)
 };
 
 function updateRobotList() {
@@ -169,18 +173,28 @@ function updateRobotList() {
 }
 
 window.addEventListener("keypress", (e) => {
-	switch (e.key) {
-		case "w":
-            allRobots = move(currentbot, rows, columns, allPositions, allRobots, {dx: 0 , dy: -1} )
-			break;
-		case "a":
-			break;
-		case "s":
-			break;
-		case "d":
-			break;
-		default:
-            break;
+	let index = IndexArrinArr(allRobots, currentbot)
+	if (index != -1){
+		cells[currentbot[0]*rows + currentbot[1]].changeType('empty')
+		switch (e.key) {
+			case "w":
+				allRobots = move(currentbot, rows, columns, allPositions, allRobots, {dx: 0 , dy: -1} )
+				break;
+			case "a":
+				allRobots = move(currentbot, rows, columns, allPositions, allRobots, {dx: -1 , dy: 0} )
+				break;
+			case "s":
+				allRobots = move(currentbot, rows, columns, allPositions, allRobots, {dx: 0 , dy: 1} )
+				break;
+			case "d":
+				allRobots = move(currentbot, rows, columns, allPositions, allRobots, {dx: 1 , dy: 0} )
+				break;
+			default:
+				break;
+		}
+		currentbot = allRobots[index]
+		cells[currentbot[0]*rows + currentbot[1]].changeType('robot')
+		updateRobotList();
 	}
 });
 
