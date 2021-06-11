@@ -10,21 +10,29 @@ body {
     width: 100vw;
     overflow: hidden;
     display: flex;
-    /* flex-direction: column; */
     padding: 32px;
+
 }
 
 .canvas-container {
-    /* margin: 1em; */
     height: 100%;
     width: 100%;
     
 }
+.radios {
+display: flex;
+flex-direction: column;
+}
+/* .radios input:checked + label {
+    color: #00ff2a;
+} */
+
 .legend {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 1em;
+    
 }
 /* list */
 #saved-items {
@@ -40,6 +48,10 @@ body {
     color: white;
 }
 /* list item */
+#robots {
+    overflow-y: auto;
+    max-height: 40vh;
+}
 #robots li {
     cursor: pointer;
     padding: .4em .6em;

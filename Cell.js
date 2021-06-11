@@ -34,6 +34,10 @@ export default class Cell {
 				this.c.fillStyle = '#ff4444';
 				this.c.fillRect(this.x * this.size, this.y * this.size, this.size, this.size);
 				break;
+			case 'goal':
+				this.c.fillStyle = '#00ff00';
+				this.c.fillRect(this.x * this.size, this.y * this.size, this.size, this.size);
+				break;
 			default:
 				break;
 		}
